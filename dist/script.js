@@ -17,12 +17,12 @@ mobileMenu.addEventListener('click', event => {
 });
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
+  if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
     setMenu(false);
     menuButton.focus();
   }
 });
 
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 820) setMenu(false);
+  if (window.innerWidth > 800 && menuButton.getAttribute('aria-expanded') === 'true') setMenu(false);
 });
