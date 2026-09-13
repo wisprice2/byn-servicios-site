@@ -13,14 +13,21 @@ await page.route('**/*', route => {
   if (url.includes('fonts.googleapis.com') || url.includes('fonts.gstatic.com')) return route.abort();
   return route.continue();
 });
-await page.goto('http://127.0.0.1:4173/', { waitUntil: 'commit' });
+await page.goto('http://127.0.0.1:4174/', { waitUntil: 'commit' });
 await page.waitForLoadState('domcontentloaded');
 await page.waitForTimeout(400);
-for (const selector of ['.hero', '.solutions', '.equipment', '.coverage-card', '.electrical-project', '.process']) {
+for (const selector of ['.hero', '.services', '.solutions', '.equipment', '.coverage-card', '.electrical-project', '.process']) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForTimeout(180);
   await page.locator(selector).screenshot({
     path: fileURLToPath(new URL(`mobile-${selector.slice(1)}.png`, output))
+  });
+}
+for (const category of ['clima', 'solar', 'electricidad', 'bombas']) {
+  await page.locator(`[data-service-category="${category}"]`).click();
+  await page.waitForTimeout(250);
+  await page.locator('.services').screenshot({
+    path: fileURLToPath(new URL(`mobile-services-${category}.png`, output))
   });
 }
 await browser.close();

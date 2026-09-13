@@ -28,7 +28,7 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
     if (message.type() === 'error') errors.push(message.text());
   });
 
-  await page.goto('http://127.0.0.1:4173/', { waitUntil: 'domcontentloaded' });
+  await page.goto('http://127.0.0.1:4174/', { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(500);
   await page.evaluate(async () => {
     const images = [...document.images];
@@ -48,6 +48,16 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
     categories[tab] = await page.locator('.product-card:not([hidden])').count();
   }
   await page.click('[data-category="residencial"][role="tab"]');
+
+  const serviceCategories = {};
+  for (const category of ['clima', 'solar', 'electricidad', 'bombas']) {
+    await page.click(`[data-service-category="${category}"]`);
+    serviceCategories[category] = {
+      visiblePanels: await page.locator('.service-panel:not([hidden])').count(),
+      cards: await page.locator('.service-panel:not([hidden]) .service-card').count()
+    };
+  }
+  await page.click('[data-service-category="clima"]');
 
   if (name === 'mobile') {
     await page.click('.menu-toggle');
@@ -81,7 +91,7 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
     };
   });
 
-  console.log(JSON.stringify({ name, ...audit, categories, errors }));
+  console.log(JSON.stringify({ name, ...audit, categories, serviceCategories, errors }));
   await page.screenshot({
     path: fileURLToPath(new URL(`${name}.png`, output)),
     fullPage: true

@@ -48,6 +48,51 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 800 && menuButton.getAttribute('aria-expanded') === 'true') setMenu(false);
 });
 
+const serviceTabs = [...document.querySelectorAll('.service-tab[data-service-category]')];
+const servicePanels = [...document.querySelectorAll('.service-panel[data-service-panel]')];
+
+function showServiceCategory(category, focusTab = false, userInitiated = false) {
+  serviceTabs.forEach(tab => {
+    const active = tab.dataset.serviceCategory === category;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+    if (active && focusTab) tab.focus();
+  });
+
+  servicePanels.forEach(panel => {
+    const active = panel.dataset.servicePanel === category;
+    panel.hidden = !active;
+    panel.classList.toggle('is-active', active);
+  });
+
+  if (userInitiated) {
+    const activeTab = serviceTabs.find(tab => tab.dataset.serviceCategory === category);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    activeTab?.scrollIntoView({
+      behavior: reducedMotion ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
+}
+
+serviceTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => showServiceCategory(tab.dataset.serviceCategory, false, true));
+  tab.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    let nextIndex = index;
+    if (event.key === 'ArrowRight') nextIndex = (index + 1) % serviceTabs.length;
+    if (event.key === 'ArrowLeft') nextIndex = (index - 1 + serviceTabs.length) % serviceTabs.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = serviceTabs.length - 1;
+    showServiceCategory(serviceTabs[nextIndex].dataset.serviceCategory, true, true);
+  });
+});
+
+if (serviceTabs.length) showServiceCategory(serviceTabs[0].dataset.serviceCategory);
+
 const catalogTabs = [...document.querySelectorAll('.catalog-tab')];
 const productCards = [...document.querySelectorAll('.product-card[data-category]')];
 const catalogStatus = document.querySelector('.catalog-status');
