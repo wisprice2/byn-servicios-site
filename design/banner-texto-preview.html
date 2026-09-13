@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vista previa del banner BYN Servicios</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body { font-family: Inter, Manrope, Arial, sans-serif; background: #071b35; }
+    .banner { position: relative; width: 100vw; height: 100vh; overflow: hidden; color: white; background: #071b35; }
+    .banner::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(3,16,32,.98) 0%, rgba(4,20,39,.94) 27%, rgba(5,23,42,.74) 43%, rgba(5,23,42,.23) 59%, transparent 73%); }
+    .banner::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(4,17,32,.16), transparent 40%, rgba(3,16,31,.18)); }
+    .background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .content { position: relative; z-index: 2; width: 780px; height: 100%; padding: 62px 0 54px 88px; display: flex; flex-direction: column; justify-content: center; }
+    .logo { position: absolute; z-index: 2; top: 38px; left: 88px; width: 300px; height: auto; filter: drop-shadow(0 7px 20px rgba(0,0,0,.3)); }
+    .overline { margin: 48px 0 20px; display: flex; align-items: center; gap: 13px; color: #63d8ff; font-size: 15px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .overline::before { content: ""; width: 42px; height: 4px; border-radius: 99px; background: #f30070; box-shadow: 0 0 15px rgba(243,0,112,.42); }
+    h1 { max-width: 690px; margin: 0; font-size: 74px; font-weight: 850; letter-spacing: -.055em; line-height: .98; text-wrap: balance; }
+    h1 span { color: #11bff4; }
+    .lead { max-width: 650px; margin: 24px 0 30px; color: rgba(237,247,255,.82); font-size: 21px; line-height: 1.5; }
+    .actions { display: flex; align-items: center; gap: 14px; }
+    .button { min-height: 56px; padding: 0 25px; border: 1px solid transparent; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 11px; font-size: 16px; font-weight: 800; }
+    .button-primary { color: white; background: linear-gradient(135deg, #13c4f7, #009ed8); box-shadow: 0 14px 30px rgba(0,172,229,.25); }
+    .button-secondary { color: white; border-color: rgba(255,255,255,.52); background: rgba(5,23,42,.36); backdrop-filter: blur(8px); }
+    .wa { width: 23px; height: 23px; border: 2px solid currentColor; border-radius: 50%; display: grid; place-items: center; font-size: 13px; }
+    .trust { margin: 31px 0 0; padding: 0; display: flex; gap: 31px; list-style: none; color: rgba(231,244,252,.78); font-size: 14px; font-weight: 700; }
+    .trust li { display: flex; align-items: center; gap: 9px; }
+    .trust i { width: 9px; height: 9px; border-radius: 50%; background: #12c3f5; box-shadow: 0 0 0 5px rgba(18,195,245,.13); }
+  </style>
+</head>
+<body>
+  <section class="banner">
+    <img class="background" src="../dist/assets/banner-hero-control-remoto-v2.png" alt="">
+    <img class="logo" src="../dist/assets/logo-premium.png" alt="BYN Servicios">
+    <div class="content">
+      <p class="overline">Climatización y electricidad en el Maule</p>
+      <h1>Climatización profesional,<br><span>confort todo el año</span></h1>
+      <p class="lead">Instalación, mantención y reparación de aire acondicionado en Molina, Talca y la Región del Maule.</p>
+      <div class="actions">
+        <span class="button button-primary"><span class="wa">⌁</span>Cotizar por WhatsApp&nbsp; →</span>
+        <span class="button button-secondary">Ver trabajos realizados</span>
+      </div>
+      <ul class="trust">
+        <li><i></i>Atención directa</li>
+        <li><i></i>Trabajo garantizado</li>
+        <li><i></i>Cobertura en el Maule</li>
+      </ul>
+    </div>
+  </section>
+</body>
+</html>
