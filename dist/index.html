@@ -45,6 +45,7 @@
         <a href="#equipos">Equipos</a>
         <a href="#proyectos">Trabajos</a>
         <a href="#cobertura">Cobertura</a>
+        <a href="#resenas">Reseñas</a>
         <a href="#preguntas">Preguntas</a>
       </nav>
       <div class="header-contact">
@@ -62,7 +63,7 @@
       </button>
     </div>
     <nav class="mobile-menu" id="mobile-menu" aria-label="Navegación móvil" hidden>
-      <a href="#servicios">Servicios</a><a href="#equipos">Equipos y marcas</a><a href="#proyectos">Proyectos</a><a href="#cobertura">Cobertura</a><a href="#preguntas">Preguntas</a>
+      <a href="#servicios">Servicios</a><a href="#equipos">Equipos y marcas</a><a href="#proyectos">Proyectos</a><a href="#cobertura">Cobertura</a><a href="#resenas">Reseñas</a><a href="#preguntas">Preguntas</a>
       <a href="tel:+56932630625">Llamar al +56 9 3263 0625</a>
     </nav>
   </header>
@@ -476,6 +477,60 @@
           <li><span class="step-number">04</span><span class="step-icon"><svg aria-hidden="true"><use href="#i-shield"></use></svg></span><h3>Prueba y orientación</h3><p>Comprobamos el funcionamiento y explicamos el uso y cuidado básico del sistema.</p></li>
         </ol>
         <div class="process-cta"><p><strong>¿No sabes qué equipo necesitas?</strong><span>Podemos orientarte según el espacio y el uso esperado.</span></p><a class="btn btn-primary" href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Necesito%20orientaci%C3%B3n%20para%20elegir%20un%20equipo." target="_blank" rel="noopener"><svg><use href="#i-whatsapp"></use></svg>Solicitar orientación</a></div>
+      </div>
+    </section>
+
+    <section class="reviews" id="resenas" aria-labelledby="reviews-title">
+      <div class="wide-shell">
+        <div class="section-intro reviews-intro">
+          <div>
+            <p class="overline"><span></span>Experiencias BYN</p>
+            <h2 id="reviews-title">La confianza también se construye después del trabajo</h2>
+          </div>
+          <p>Comparte cómo fue tu experiencia con nuestro servicio. Las opiniones recibidas se validan antes de publicarse.</p>
+        </div>
+
+        <div class="reviews-layout">
+          <div class="review-showcase" aria-label="Ejemplos de cómo se presentarán las opiniones verificadas">
+            <article class="review-card">
+              <div class="review-card-top"><span class="review-stars" aria-label="Cinco de cinco estrellas">★★★★★</span><span class="review-sample">Ejemplo visual</span></div>
+              <p>“Llegaron en el horario coordinado, explicaron qué capacidad necesitaba el dormitorio y dejaron la instalación muy ordenada. El equipo quedó funcionando perfecto y sin ruidos.”</p>
+              <footer><span class="review-avatar" aria-hidden="true">CR</span><span><strong>Cliente residencial</strong><small>Molina · Instalación</small></span></footer>
+            </article>
+            <article class="review-card">
+              <div class="review-card-top"><span class="review-stars" aria-label="Cinco de cinco estrellas">★★★★★</span><span class="review-sample">Ejemplo visual</span></div>
+              <p>“Solicitamos una mantención para varios equipos del local. Nos mostraron el estado antes y después de la limpieza y entregaron recomendaciones claras para cuidarlos.”</p>
+              <footer><span class="review-avatar" aria-hidden="true">CC</span><span><strong>Cliente comercial</strong><small>Talca · Mantención</small></span></footer>
+            </article>
+            <p class="review-disclosure"><strong>Transparencia:</strong> estos textos ilustran el diseño de la sección y deben reemplazarse por reseñas verificadas de clientes reales.</p>
+          </div>
+
+          <aside class="review-form-panel" aria-labelledby="review-form-title">
+            <span class="review-form-icon" aria-hidden="true">★</span>
+            <p class="review-form-kicker">¿Ya trabajaste con nosotros?</p>
+            <h3 id="review-form-title">Déjanos tu reseña</h3>
+            <p>Completa los datos y envía tu experiencia directamente a BYN Servicios por WhatsApp.</p>
+            <form class="review-form" id="review-form">
+              <label for="review-rating">Tu valoración</label>
+              <select id="review-rating" name="rating">
+                <option value="5">★★★★★ — Excelente</option>
+                <option value="4">★★★★☆ — Muy buena</option>
+                <option value="3">★★★☆☆ — Buena</option>
+                <option value="2">★★☆☆☆ — Regular</option>
+                <option value="1">★☆☆☆☆ — Necesita mejorar</option>
+              </select>
+              <div class="review-field-row">
+                <div><label for="review-name">Tu nombre <small>(opcional)</small></label><input id="review-name" name="name" type="text" maxlength="60" autocomplete="name" placeholder="Ej.: Carolina"></div>
+                <div><label for="review-location">Comuna <small>(opcional)</small></label><input id="review-location" name="location" type="text" maxlength="60" autocomplete="address-level2" placeholder="Ej.: Talca"></div>
+              </div>
+              <label for="review-message">Cuéntanos tu experiencia</label>
+              <textarea id="review-message" name="message" rows="4" maxlength="500" required placeholder="¿Qué servicio realizamos y cómo fue tu experiencia?"></textarea>
+              <button class="btn btn-primary btn-large" type="submit"><svg aria-hidden="true"><use href="#i-whatsapp"></use></svg>Enviar reseña por WhatsApp</button>
+              <p class="review-form-note" id="review-form-status">La reseña se revisará contigo antes de aparecer públicamente.</p>
+            </form>
+            <a class="facebook-review-link" href="https://www.facebook.com/profile.php?id=100028941828914&amp;sk=reviews" target="_blank" rel="noopener">También puedes recomendar a BYN en Facebook <svg aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          </aside>
+        </div>
       </div>
     </section>
 

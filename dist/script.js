@@ -207,3 +207,26 @@ catalogToggle?.addEventListener('click', () => {
 });
 
 if (catalogTabs.length) showCategory(catalogTabs[0].dataset.category);
+
+const reviewForm = document.querySelector('#review-form');
+const reviewRating = document.querySelector('#review-rating');
+const reviewName = document.querySelector('#review-name');
+const reviewLocation = document.querySelector('#review-location');
+const reviewMessage = document.querySelector('#review-message');
+const reviewFormStatus = document.querySelector('#review-form-status');
+
+reviewForm?.addEventListener('submit', event => {
+  event.preventDefault();
+  if (!reviewForm.reportValidity()) return;
+
+  const rating = Number(reviewRating?.value || 5);
+  const stars = `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
+  const name = reviewName?.value.trim();
+  const location = reviewLocation?.value.trim();
+  const message = reviewMessage?.value.trim();
+  const identity = [name, location].filter(Boolean).join(' · ') || 'Cliente BYN';
+  const whatsappMessage = `Hola BYN Servicios. Quiero compartir una reseña sobre el servicio.\n\nValoración: ${stars} (${rating}/5)\nNombre/comuna: ${identity}\nExperiencia: ${message}`;
+
+  if (reviewFormStatus) reviewFormStatus.textContent = 'Abriendo WhatsApp para que revises y envíes tu reseña…';
+  window.open(`https://wa.me/56932630625?text=${encodeURIComponent(whatsappMessage)}`, '_blank', 'noopener');
+});
