@@ -22,6 +22,12 @@ const requestedCase = process.argv[2];
 
 for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || caseName === requestedCase)) {
   const page = await browser.newPage({ viewport });
+  await page.route('**/*', route => {
+    const url = route.request().url();
+    if (url.includes('fonts.googleapis.com')) return route.fulfill({ status: 200, contentType: 'text/css', body: '' });
+    if (url.includes('fonts.gstatic.com')) return route.fulfill({ status: 204, body: '' });
+    return route.continue();
+  });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => {
@@ -83,6 +89,21 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
     categories.mobileMenu = { opened, closed };
   }
 
+  const technicalSheets = await page.evaluate(async () => {
+    const links = [...document.querySelectorAll('.sheet-link, .sheet-menu-links a')];
+    const hrefs = [...new Set(links.map(link => link.href))];
+    const responses = await Promise.all(hrefs.map(async href => {
+      const response = await fetch(href, { method: 'HEAD' });
+      return { file: new URL(href).pathname.split('/').pop(), ok: response.ok, type: response.headers.get('content-type') };
+    }));
+    return {
+      links: links.length,
+      uniqueFiles: hrefs.length,
+      broken: responses.filter(item => !item.ok || !item.type?.includes('pdf')),
+      groupedSheets: document.querySelectorAll('.sheet-menu-links a').length
+    };
+  });
+
   const audit = await page.evaluate(() => {
     const heroVideo = document.querySelector('.hero-media video');
     const heroRect = heroVideo?.getBoundingClientRect();
@@ -107,7 +128,7 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
     };
   });
 
-  console.log(JSON.stringify({ name, ...audit, categories, serviceCategories, btuGuide, errors }));
+  console.log(JSON.stringify({ name, ...audit, categories, serviceCategories, btuGuide, technicalSheets, errors }));
   await page.screenshot({
     path: fileURLToPath(new URL(`${name}.png`, output)),
     fullPage: true
