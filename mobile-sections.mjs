@@ -16,7 +16,7 @@ await page.route('**/*', route => {
 await page.goto('http://127.0.0.1:4174/', { waitUntil: 'commit' });
 await page.waitForLoadState('domcontentloaded');
 await page.waitForTimeout(400);
-for (const selector of ['.hero', '.services', '.solutions', '.equipment', '.coverage-card', '.electrical-project', '.process']) {
+for (const selector of ['.hero', '.services', '.solutions', '.btu-guide', '.equipment', '.coverage-card', '.electrical-project', '.process']) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForTimeout(180);
   await page.locator(selector).screenshot({

@@ -93,6 +93,42 @@ serviceTabs.forEach((tab, index) => {
 
 if (serviceTabs.length) showServiceCategory(serviceTabs[0].dataset.serviceCategory);
 
+const btuArea = document.querySelector('#btu-area');
+const btuAreaValue = document.querySelector('#btu-area-value');
+const btuCapacity = document.querySelector('#btu-capacity');
+const btuCoverage = document.querySelector('#btu-coverage');
+const btuWhatsapp = document.querySelector('#btu-whatsapp');
+const btuRanges = [
+  { capacity: 9000, maxArea: 18 },
+  { capacity: 12000, maxArea: 24 },
+  { capacity: 18000, maxArea: 36 },
+  { capacity: 24000, maxArea: 48 },
+  { capacity: 36000, maxArea: 72 },
+  { capacity: 48000, maxArea: 96 },
+  { capacity: 60000, maxArea: 120 }
+];
+const formatBtu = value => new Intl.NumberFormat('es-CL').format(value);
+
+function updateBtuGuide() {
+  if (!btuArea) return;
+  const area = Number(btuArea.value);
+  const recommendation = btuRanges.find(item => area <= item.maxArea) || btuRanges[btuRanges.length - 1];
+  const capacityLabel = `${formatBtu(recommendation.capacity)} BTU/h`;
+
+  if (btuAreaValue) btuAreaValue.textContent = `${area} m²`;
+  if (btuCapacity) btuCapacity.textContent = capacityLabel;
+  if (btuCoverage) btuCoverage.textContent = `Cobertura referencial: hasta ${recommendation.maxArea} m²`;
+  btuArea.setAttribute('aria-valuetext', `${area} metros cuadrados`);
+
+  if (btuWhatsapp) {
+    const message = `Hola BYN Servicios. Necesito climatizar un espacio de ${area} m². La guía indica ${capacityLabel}. Quisiera confirmar la capacidad y cotizar.`;
+    btuWhatsapp.href = `https://wa.me/56932630625?text=${encodeURIComponent(message)}`;
+  }
+}
+
+btuArea?.addEventListener('input', updateBtuGuide);
+updateBtuGuide();
+
 const catalogTabs = [...document.querySelectorAll('.catalog-tab')];
 const productCards = [...document.querySelectorAll('.product-card[data-category]')];
 const catalogStatus = document.querySelector('.catalog-status');

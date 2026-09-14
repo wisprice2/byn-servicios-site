@@ -59,6 +59,22 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
   }
   await page.click('[data-service-category="clima"]');
 
+  await page.locator('#btu-area').evaluate(input => {
+    input.value = '36';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const btuGuide = await page.evaluate(() => ({
+    area: document.getElementById('btu-area-value')?.textContent,
+    capacity: document.getElementById('btu-capacity')?.textContent,
+    coverage: document.getElementById('btu-coverage')?.textContent,
+    whatsapp: document.getElementById('btu-whatsapp')?.getAttribute('href'),
+    priorityProducts: [...document.querySelectorAll('.is-priority-brand h3')].map(element => element.textContent)
+  }));
+  await page.locator('#btu-area').evaluate(input => {
+    input.value = '20';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+
   if (name === 'mobile') {
     await page.click('.menu-toggle');
     const opened = await page.locator('#mobile-menu').isVisible();
@@ -91,7 +107,7 @@ for (const [name, viewport] of cases.filter(([caseName]) => !requestedCase || ca
     };
   });
 
-  console.log(JSON.stringify({ name, ...audit, categories, serviceCategories, errors }));
+  console.log(JSON.stringify({ name, ...audit, categories, serviceCategories, btuGuide, errors }));
   await page.screenshot({
     path: fileURLToPath(new URL(`${name}.png`, output)),
     fullPage: true

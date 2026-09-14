@@ -189,9 +189,9 @@
           <div class="brand-marquee" role="region" aria-label="Marcas de equipos de climatización en movimiento continuo">
             <div class="brand-track">
               <div class="brand-grid">
-                <div class="brand-tile brand-word brand-tcl" aria-label="TCL">TCL</div>
+                <div class="brand-tile brand-word brand-tcl brand-priority" aria-label="TCL">TCL</div>
+                <div class="brand-tile brand-priority"><img src="assets/midea.svg" alt="Midea"></div>
                 <div class="brand-tile"><img src="assets/clark.svg" alt="CLARK"></div>
-                <div class="brand-tile"><img src="assets/midea.svg" alt="Midea"></div>
                 <div class="brand-tile"><img src="assets/hisense.svg" alt="Hisense"></div>
                 <div class="brand-tile"><img src="assets/daikin.png" alt="Daikin"></div>
                 <div class="brand-tile"><img src="assets/samsung.png" alt="Samsung"></div>
@@ -200,9 +200,9 @@
                 <div class="brand-tile brand-word" aria-label="Khöne">KHÖNE</div>
               </div>
               <div class="brand-grid" aria-hidden="true">
-                <div class="brand-tile brand-word brand-tcl">TCL</div>
+                <div class="brand-tile brand-word brand-tcl brand-priority">TCL</div>
+                <div class="brand-tile brand-priority"><img src="assets/midea.svg" alt=""></div>
                 <div class="brand-tile"><img src="assets/clark.svg" alt=""></div>
-                <div class="brand-tile"><img src="assets/midea.svg" alt=""></div>
                 <div class="brand-tile"><img src="assets/hisense.svg" alt=""></div>
                 <div class="brand-tile"><img src="assets/daikin.png" alt=""></div>
                 <div class="brand-tile"><img src="assets/samsung.png" alt=""></div>
@@ -213,6 +213,39 @@
             </div>
           </div>
         </div>
+
+        <section class="btu-guide" id="guia-btu" aria-labelledby="btu-guide-title">
+          <div class="btu-guide-copy">
+            <p class="btu-kicker">Guía rápida de capacidad</p>
+            <h3 id="btu-guide-title">Selecciona los m² y estima los BTU</h3>
+            <p>Usa esta referencia para orientarte antes de cotizar. La capacidad definitiva se confirma evaluando altura, ventanas, orientación, aislación y cantidad de personas.</p>
+            <div class="btu-table-wrap">
+              <table class="btu-table">
+                <thead><tr><th>Superficie estimada</th><th>Capacidad orientativa</th></tr></thead>
+                <tbody>
+                  <tr><td>Hasta 18 m²</td><td>9.000 BTU/h</td></tr>
+                  <tr><td>Hasta 24 m²</td><td>12.000 BTU/h</td></tr>
+                  <tr><td>Hasta 36 m²</td><td>18.000 BTU/h</td></tr>
+                  <tr><td>Hasta 48 m²</td><td>24.000 BTU/h</td></tr>
+                  <tr><td>Hasta 72 m²</td><td>36.000 BTU/h</td></tr>
+                  <tr><td>Hasta 96 m²</td><td>48.000 BTU/h</td></tr>
+                  <tr><td>Hasta 120 m²</td><td>60.000 BTU/h</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="btu-calculator">
+            <label for="btu-area"><span>Superficie del recinto</span><output id="btu-area-value" for="btu-area">20 m²</output></label>
+            <input id="btu-area" type="range" min="6" max="120" step="1" value="20" aria-valuetext="20 metros cuadrados">
+            <div class="btu-range-scale" aria-hidden="true"><span>6 m²</span><span>120 m²</span></div>
+            <div class="btu-result" aria-live="polite">
+              <span class="btu-result-icon"><svg aria-hidden="true"><use href="#i-ac"></use></svg></span>
+              <span><small>Capacidad sugerida</small><strong id="btu-capacity">12.000 BTU/h</strong><em id="btu-coverage">Cobertura referencial: hasta 24 m²</em></span>
+            </div>
+            <p class="btu-disclaimer"><strong>Referencia inicial:</strong> 500 BTU por m² en condiciones estándar. No reemplaza el cálculo técnico.</p>
+            <a class="btn btn-primary" id="btu-whatsapp" href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Necesito%20climatizar%20un%20espacio%20de%2020%20m%C2%B2.%20La%20gu%C3%ADa%20indica%2012.000%20BTU%2Fh.%20Quisiera%20confirmar%20la%20capacidad%20y%20cotizar." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"></use></svg>Confirmar con un técnico<svg class="arrow" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          </div>
+        </section>
 
         <div class="catalog-toolbar">
           <div class="catalog-tabs" role="tablist" aria-label="Categorías de equipos">
@@ -225,17 +258,17 @@
         </div>
 
         <div class="product-grid" id="catalog-products" role="tabpanel" aria-labelledby="tab-residencial">
-          <article class="product-card" data-category="residencial">
-            <div class="product-media"><img src="assets/split-muro-inverter-r32-v2.webp" alt="Split muro Inverter R32 CLARK" loading="lazy"><span>Residencial</span></div>
-            <div class="product-copy"><small>CLARK · Inverter · R32</small><h3>Split Muro Inverter R32</h3><p>9.000 a 36.000 BTU/h</p><a href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20cotizar%20un%20Split%20Muro%20Inverter%20R32." target="_blank" rel="noopener">Consultar equipo <svg><use href="#i-arrow"></use></svg></a></div>
+          <article class="product-card is-field-product is-priority-brand" data-category="residencial">
+            <div class="product-media"><img src="assets/producto-tcl-12000-talca.jpg" alt="Equipo TCL de 12.000 BTU instalado por BYN Servicios en Talca" loading="lazy"><span>TCL destacado</span></div>
+            <div class="product-copy"><small>TCL · Inverter · instalación real</small><h3>Split TCL 12.000 BTU</h3><p>Equipo con tecnología Inverter y Wi-Fi documentado en Talca</p><a href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20consultar%20por%20un%20equipo%20TCL%20de%2012.000%20BTU." target="_blank" rel="noopener">Consultar TCL <svg><use href="#i-arrow"></use></svg></a></div>
           </article>
-          <article class="product-card" data-category="residencial">
-            <div class="product-media"><img src="assets/split-muro-inverter-r32-v2.webp" alt="Split muro Inverter R410A CLARK" loading="lazy"><span>Residencial</span></div>
-            <div class="product-copy"><small>CLARK · Inverter · R410A</small><h3>Split Muro Inverter R410A</h3><p>9.000 a 24.000 BTU/h</p><a href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20cotizar%20un%20Split%20Muro%20Inverter%20R410A." target="_blank" rel="noopener">Consultar equipo <svg><use href="#i-arrow"></use></svg></a></div>
+          <article class="product-card is-field-product is-priority-brand" data-category="residencial">
+            <div class="product-media"><img src="assets/producto-tcl-18000-sagrada-familia.jpg" alt="Equipo TCL de 18.000 BTU instalado por BYN Servicios en Sagrada Familia" loading="lazy"><span>TCL destacado</span></div>
+            <div class="product-copy"><small>TCL · 18.000 BTU · instalación real</small><h3>Split TCL 18.000 BTU</h3><p>Mayor capacidad para espacios residenciales y profesionales</p><a href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20consultar%20por%20un%20equipo%20TCL%20de%2018.000%20BTU." target="_blank" rel="noopener">Consultar TCL <svg><use href="#i-arrow"></use></svg></a></div>
           </article>
-          <article class="product-card" data-category="residencial">
-            <div class="product-media"><img src="assets/split-muro-convencional-v2.webp" alt="Split muro convencional" loading="lazy"><span>Residencial</span></div>
-            <div class="product-copy"><small>CLARK · On/Off · R410A</small><h3>Split Muro Convencional</h3><p>9.000 a 24.000 BTU/h</p><a href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20cotizar%20un%20Split%20Muro%20Convencional." target="_blank" rel="noopener">Consultar equipo <svg><use href="#i-arrow"></use></svg></a></div>
+          <article class="product-card is-field-product is-priority-brand" data-category="residencial">
+            <div class="product-media"><img src="assets/producto-midea-consola-18000-cumpeo.jpg" alt="Equipo consola Midea de 18.000 BTU instalado por BYN Servicios en Cumpeo" loading="lazy"><span>Midea destacado</span></div>
+            <div class="product-copy"><small>Midea · consola · instalación real</small><h3>Consola Midea 18.000 BTU</h3><p>Formato consola para climatizar espacios con instalación baja</p><a href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20consultar%20por%20un%20equipo%20consola%20Midea%20de%2018.000%20BTU." target="_blank" rel="noopener">Consultar Midea <svg><use href="#i-arrow"></use></svg></a></div>
           </article>
           <article class="product-card" data-category="residencial">
             <div class="product-media"><img src="assets/aire-ventana-v2.webp" alt="Equipo de aire acondicionado de ventana CLARK" loading="lazy"><span>Residencial</span></div>
@@ -352,7 +385,7 @@
         <article class="featured-project">
           <div class="featured-copy">
             <span class="project-label">Proyecto comercial · Talca</span>
-            <h3>Proyecto de climatización con equipos y ductos</h3>
+            <h3>Proyecto de climatización con equipos tipo ducto</h3>
             <p>Montaje de sistema de climatización canalizado, trazado de ductos, distribución de aire y terminaciones para un recinto comercial en Talca.</p>
             <ul><li>Instalación de equipos canalizables</li><li>Montaje y conexión de ductos</li><li>Difusión y distribución de aire</li><li>Ejecución coordinada en obra</li></ul>
             <a class="btn btn-primary" href="https://wa.me/56932630625?text=Hola%20BYN%20Servicios.%20Quisiera%20evaluar%20un%20proyecto%20de%20climatizaci%C3%B3n%20por%20ductos." target="_blank" rel="noopener"><svg><use href="#i-whatsapp"></use></svg>Cotizar proyecto<svg class="arrow"><use href="#i-arrow"></use></svg></a>
@@ -433,7 +466,7 @@
             <details open><summary>¿Qué información necesito para cotizar?</summary><p>Indica el servicio, la comuna y adjunta fotografías del equipo o del lugar de instalación.</p></details>
             <details><summary>¿En qué comunas atienden?</summary><p>Coordinamos servicios desde Santiago hasta Puerto Montt. La disponibilidad depende de la comuna, el tipo de trabajo y la planificación del proyecto.</p></details>
             <details><summary>¿Realizan mantenciones y reparaciones?</summary><p>Sí, evaluamos el estado del equipo para recomendar la solución adecuada.</p></details>
-            <details><summary>¿Con qué marcas y tipos de equipos trabajan?</summary><p>Trabajamos con equipos TCL, CLARK, Midea, Hisense, Daikin, Samsung, Fujitsu, Daitsu y Khöne, entre otras alternativas. También evaluamos split muro, cassette, ductos, cielo piso, portátiles y accesorios según cada proyecto.</p></details>
+            <details><summary>¿Con qué marcas y tipos de equipos trabajan?</summary><p>Nuestra experiencia principal está en equipos TCL y Midea. También trabajamos con CLARK, Hisense, Daikin, Samsung, Fujitsu, Daitsu y Khöne, según requerimientos y disponibilidad. Evaluamos split muro, cassette, equipos tipo ducto, cielo piso, portátiles y accesorios para cada proyecto.</p></details>
           </div>
         </div>
       </div>
