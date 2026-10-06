@@ -1,9 +1,15 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { createReviewsHandler } from './lib/reviews.mjs';
+import { createLocalReviewStore } from './lib/local-review-store.mjs';
 
 const root = join(process.cwd(), 'dist');
 const port = Number(process.argv[2] || 4174);
+const reviewsHandler = createReviewsHandler({
+  store: createLocalReviewStore(join(process.cwd(), '.local-data', 'reviews')),
+  rateSecret: 'local-development-only'
+});
 const mime = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -12,11 +18,16 @@ const mime = {
   '.png': 'image/png',
   '.webp': 'image/webp',
   '.mp4': 'video/mp4',
-  '.svg': 'image/svg+xml'
+  '.svg': 'image/svg+xml',
+  '.pdf': 'application/pdf'
 };
 
 createServer(async (request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+  if (pathname === '/api/reviews') {
+    await reviewsHandler(request, response);
+    return;
+  }
   const relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
   const file = normalize(join(root, relative));
 

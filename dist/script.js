@@ -214,19 +214,123 @@ const reviewName = document.querySelector('#review-name');
 const reviewLocation = document.querySelector('#review-location');
 const reviewMessage = document.querySelector('#review-message');
 const reviewFormStatus = document.querySelector('#review-form-status');
+const reviewList = document.querySelector('#review-list');
+const reviewListStatus = document.querySelector('#review-list-status');
+const reviewLoadMore = document.querySelector('#review-load-more');
+let reviewCursor = null;
+let reviewLoading = false;
+let reviewRequestId = null;
+const displayedReviewIds = new Set();
 
-reviewForm?.addEventListener('submit', event => {
+function reviewElement(tag, className, value) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (value != null) element.textContent = value;
+  return element;
+}
+
+function appendReview(review, prepend = false) {
+  if (!reviewList || displayedReviewIds.has(review.id)) return;
+  displayedReviewIds.add(review.id);
+  reviewList.querySelector('.review-empty')?.remove();
+  const card = reviewElement('article', 'review-card');
+  card.dataset.reviewId = review.id;
+  const top = reviewElement('div', 'review-card-top');
+  const stars = reviewElement('span', 'review-stars', '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating));
+  stars.setAttribute('aria-label', `${review.rating} de 5 estrellas`);
+  const date = reviewElement('time', '', new Intl.DateTimeFormat('es-CL', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(review.createdAt)));
+  date.dateTime = review.createdAt;
+  top.append(stars, date);
+  const footer = reviewElement('footer');
+  const initials = review.name.split(/\s+/).slice(0, 2).map(word => Array.from(word)[0]).join('').toUpperCase();
+  const avatar = reviewElement('span', 'review-avatar', initials);
+  avatar.setAttribute('aria-hidden', 'true');
+  const identity = reviewElement('span');
+  identity.append(reviewElement('strong', '', review.name), reviewElement('small', '', review.location || 'Cliente BYN Servicios'));
+  footer.append(avatar, identity);
+  // All submitted content is rendered as text, never HTML.
+  card.append(top, reviewElement('p', '', review.message), footer);
+  prepend ? reviewList.prepend(card) : reviewList.append(card);
+  if (reviewListStatus) reviewListStatus.textContent = 'Experiencias compartidas con BYN Servicios.';
+}
+
+async function reviewApi(options = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+  try {
+    const response = await fetch(`/api/reviews${options.cursor ? `?cursor=${encodeURIComponent(options.cursor)}` : ''}`, { ...options, cache: 'no-store', signal: controller.signal });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'No pudimos guardar o cargar las reseñas. Inténtalo de nuevo.');
+    return data;
+  } catch (error) {
+    if (error.name === 'AbortError') throw new Error('La conexión está tardando. Inténtalo de nuevo; no borraremos lo que escribiste.');
+    if (error instanceof SyntaxError || error instanceof TypeError) throw new Error('No se pudo conectar con las reseñas. Inténtalo de nuevo en unos minutos.');
+    throw error;
+  } finally { clearTimeout(timeout); }
+}
+
+async function loadReviews() {
+  if (!reviewList || reviewLoading) return;
+  reviewLoading = true;
+  reviewList.setAttribute('aria-busy', 'true');
+  if (reviewLoadMore) reviewLoadMore.disabled = true;
+  try {
+    const data = await reviewApi({ cursor: reviewCursor });
+    data.reviews.forEach(review => appendReview(review));
+    reviewCursor = data.cursor;
+    if (!displayedReviewIds.size) {
+      reviewList.replaceChildren();
+      const empty = reviewElement('div', 'review-empty');
+      empty.append(reviewElement('strong', '', 'Tu experiencia cuenta'), reviewElement('p', '', 'Todavía no hay reseñas publicadas. Si ya trabajaste con nosotros, puedes compartir la primera.'));
+      reviewList.append(empty);
+      reviewListStatus.textContent = 'Reseñas de nuestros clientes';
+    }
+    reviewLoadMore.hidden = !reviewCursor;
+    reviewLoadMore.textContent = 'Ver más reseñas';
+  } catch (error) {
+    reviewListStatus.textContent = error.message;
+    reviewLoadMore.hidden = false;
+    reviewLoadMore.textContent = 'Reintentar carga';
+  } finally {
+    reviewLoading = false;
+    reviewList.setAttribute('aria-busy', 'false');
+    if (reviewLoadMore) reviewLoadMore.disabled = false;
+  }
+}
+
+reviewLoadMore?.addEventListener('click', loadReviews);
+if (reviewList) loadReviews();
+
+reviewForm?.addEventListener('submit', async event => {
   event.preventDefault();
   if (!reviewForm.reportValidity()) return;
 
-  const rating = Number(reviewRating?.value || 5);
-  const stars = `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
-  const name = reviewName?.value.trim();
-  const location = reviewLocation?.value.trim();
-  const message = reviewMessage?.value.trim();
-  const identity = [name, location].filter(Boolean).join(' · ') || 'Cliente BYN';
-  const whatsappMessage = `Hola BYN Servicios. Quiero compartir una reseña sobre el servicio.\n\nValoración: ${stars} (${rating}/5)\nNombre/comuna: ${identity}\nExperiencia: ${message}`;
-
-  if (reviewFormStatus) reviewFormStatus.textContent = 'Abriendo WhatsApp para que revises y envíes tu reseña…';
-  window.open(`https://wa.me/56932630625?text=${encodeURIComponent(whatsappMessage)}`, '_blank', 'noopener');
+  const button = reviewForm.querySelector('button[type="submit"]');
+  if (button.disabled) return;
+  reviewRequestId ||= crypto.randomUUID();
+  button.disabled = true;
+  button.textContent = 'Publicando…';
+  reviewForm.setAttribute('aria-busy', 'true');
+  reviewFormStatus.dataset.state = 'loading';
+  reviewFormStatus.textContent = 'Guardando tu reseña…';
+  try {
+    const data = await reviewApi({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+      requestId: reviewRequestId,
+      rating: Number(reviewRating.value), name: reviewName.value.trim(), location: reviewLocation.value.trim(), message: reviewMessage.value.trim(),
+      consent: document.querySelector('#review-consent').checked, website: document.querySelector('#review-website').value
+    }) });
+    appendReview(data.review, true);
+    reviewList.scrollLeft = 0;
+    reviewForm.reset();
+    reviewRequestId = null;
+    reviewFormStatus.dataset.state = 'success';
+    reviewFormStatus.textContent = data.message;
+  } catch (error) {
+    reviewFormStatus.dataset.state = 'error';
+    reviewFormStatus.textContent = error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Publicar reseña';
+    reviewForm.setAttribute('aria-busy', 'false');
+  }
 });

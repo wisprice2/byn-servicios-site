@@ -487,29 +487,23 @@
             <p class="overline"><span></span>Experiencias BYN</p>
             <h2 id="reviews-title">La confianza también se construye después del trabajo</h2>
           </div>
-          <p>Comparte cómo fue tu experiencia con nuestro servicio. Las opiniones recibidas se validan antes de publicarse.</p>
+          <p>Comparte cómo fue tu experiencia con nuestro servicio. Tu reseña se guarda aquí para que otras personas puedan leerla.</p>
         </div>
 
         <div class="reviews-layout">
-          <div class="review-showcase" aria-label="Ejemplos de cómo se presentarán las opiniones verificadas">
-            <article class="review-card">
-              <div class="review-card-top"><span class="review-stars" aria-label="Cinco de cinco estrellas">★★★★★</span><span class="review-sample">Ejemplo visual</span></div>
-              <p>“Llegaron en el horario coordinado, explicaron qué capacidad necesitaba el dormitorio y dejaron la instalación muy ordenada. El equipo quedó funcionando perfecto y sin ruidos.”</p>
-              <footer><span class="review-avatar" aria-hidden="true">CR</span><span><strong>Cliente residencial</strong><small>Molina · Instalación</small></span></footer>
-            </article>
-            <article class="review-card">
-              <div class="review-card-top"><span class="review-stars" aria-label="Cinco de cinco estrellas">★★★★★</span><span class="review-sample">Ejemplo visual</span></div>
-              <p>“Solicitamos una mantención para varios equipos del local. Nos mostraron el estado antes y después de la limpieza y entregaron recomendaciones claras para cuidarlos.”</p>
-              <footer><span class="review-avatar" aria-hidden="true">CC</span><span><strong>Cliente comercial</strong><small>Talca · Mantención</small></span></footer>
-            </article>
-            <p class="review-disclosure"><strong>Transparencia:</strong> estos textos ilustran el diseño de la sección y deben reemplazarse por reseñas verificadas de clientes reales.</p>
+          <div class="review-feed">
+            <p class="review-list-status" id="review-list-status" role="status">Cargando opiniones…</p>
+            <div class="review-showcase" id="review-list" aria-label="Reseñas de nuestros clientes" aria-busy="true"></div>
+            <button type="button" class="catalog-more" id="review-load-more" hidden>Ver más reseñas</button>
+            <p class="review-disclosure">Opiniones publicadas por quienes comparten su experiencia. No se sincronizan con WhatsApp ni con Facebook.</p>
+            <noscript><p>Activa JavaScript para leer y publicar reseñas en esta web.</p></noscript>
           </div>
 
           <aside class="review-form-panel" aria-labelledby="review-form-title">
             <span class="review-form-icon" aria-hidden="true">★</span>
             <p class="review-form-kicker">¿Ya trabajaste con nosotros?</p>
             <h3 id="review-form-title">Déjanos tu reseña</h3>
-            <p>Completa los datos y envía tu experiencia directamente a BYN Servicios por WhatsApp.</p>
+            <p>Escribe tu experiencia y publícala directamente en esta web, sin salir a WhatsApp.</p>
             <form class="review-form" id="review-form">
               <label for="review-rating">Tu valoración</label>
               <select id="review-rating" name="rating">
@@ -524,9 +518,11 @@
                 <div><label for="review-location">Comuna <small>(opcional)</small></label><input id="review-location" name="location" type="text" maxlength="60" autocomplete="address-level2" placeholder="Ej.: Talca"></div>
               </div>
               <label for="review-message">Cuéntanos tu experiencia</label>
-              <textarea id="review-message" name="message" rows="4" maxlength="500" required placeholder="¿Qué servicio realizamos y cómo fue tu experiencia?"></textarea>
-              <button class="btn btn-primary btn-large" type="submit"><svg aria-hidden="true"><use href="#i-whatsapp"></use></svg>Enviar reseña por WhatsApp</button>
-              <p class="review-form-note" id="review-form-status">La reseña se revisará contigo antes de aparecer públicamente.</p>
+              <textarea id="review-message" name="message" rows="4" minlength="10" maxlength="500" required placeholder="¿Qué servicio realizamos y cómo fue tu experiencia?" aria-describedby="review-form-status"></textarea>
+              <div class="review-honeypot" aria-hidden="true"><label for="review-website">Deja este campo vacío</label><input id="review-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="review-consent"><input type="checkbox" name="consent" id="review-consent" required><span>Acepto publicar mi valoración, nombre, comuna y comentario en esta web. No incluiré datos privados.</span></label>
+              <button class="btn btn-primary btn-large" type="submit">Publicar reseña <svg aria-hidden="true"><use href="#i-arrow"></use></svg></button>
+              <p class="review-form-note" id="review-form-status" role="status" aria-live="polite">Tu opinión quedará guardada y visible en esta sección.</p>
             </form>
             <a class="facebook-review-link" href="https://www.facebook.com/profile.php?id=100028941828914&amp;sk=reviews" target="_blank" rel="noopener">También puedes recomendar a BYN en Facebook <svg aria-hidden="true"><use href="#i-arrow"></use></svg></a>
           </aside>
